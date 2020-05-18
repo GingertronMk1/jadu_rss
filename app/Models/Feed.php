@@ -8,8 +8,9 @@ class Feed extends Model
 {
     //
     protected $fillable = [
+        'name',
         'url',
-        'name'
+        'description'
     ];
 
     public function user() {
