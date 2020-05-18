@@ -52,11 +52,12 @@ It ensures 3 things:
 3. A Feed's URL is valid
 
 The latter of these is done using Laravel's built-in URL validation.
+A step I would take at some point is validating that the URL points to a valid RSS feed, however I do not know of any way to do that presently short of at every stage of updating the URL making a GET request to ensure that the data recieved can be parsed correctly.
 
 ### Step 5 - Testing
 
-I user-tested the application, 
-
+I user tested the application, first trying to add and edit new feeds with invalid data, then by comparing the output of the "show" view with that of the Google Chrome Extension [RSS Feed Reader](https://chrome.google.com/webstore/detail/rss-feed-reader/pnjaodmkngahhkoihejjehlcdlnohgmp/related?hl=en).
+These matched up, with which I was satisfied that the view worked as intended.
 
 ## Breakdown
 
