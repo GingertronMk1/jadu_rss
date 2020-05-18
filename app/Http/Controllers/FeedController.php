@@ -80,7 +80,11 @@ class FeedController extends Controller
      */
     public function edit(Feed $feed)
     {
-        return view('feeds.edit', compact('feed'));
+        if(Auth::user() == $feed->user) {
+            return view('feeds.edit', compact('feed'));
+        } else {
+            return redirect()->route('feeds.index');
+        }
     }
 
     /**
@@ -93,7 +97,6 @@ class FeedController extends Controller
     public function update(FeedRequest $request, Feed $feed)
     {
         $feed->update($request->all());
-        return redirect()->route('feeds.show', compact('feed'));
     }
 
     /**
@@ -104,6 +107,6 @@ class FeedController extends Controller
      */
     public function destroy(Feed $feed)
     {
-        //
+        $feed->delete();
     }
 }
