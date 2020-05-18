@@ -7,6 +7,7 @@
             Add a feed
         </a>
     </div>
+
     @foreach($feeds as $feed)
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -33,5 +34,6 @@
             </div>
         </div>
     @endforeach
+
 </div>
 @endsection
