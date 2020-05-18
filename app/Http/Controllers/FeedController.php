@@ -97,6 +97,7 @@ class FeedController extends Controller
     public function update(FeedRequest $request, Feed $feed)
     {
         $feed->update($request->all());
+        return redirect()->route('feeds.edit', compact('feed'));
     }
 
     /**
@@ -110,5 +111,6 @@ class FeedController extends Controller
         if(Auth::user() == $feed->user) {
             $feed->delete();
         }
+        return redirect()->route('feeds.index');
     }
 }
