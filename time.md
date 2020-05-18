@@ -53,7 +53,13 @@ It ensures 3 things:
 
 The latter of these is done using Laravel's built-in URL validation.
 
+### Step 5 - Testing
+
+I user-tested the application, 
+
 
 ## Breakdown
 
 The bulk of my time in this project was spent understanding the structure and parsing of the XML document returned by the RSS URL.
+I was initially unfamiliar with this structure, and my initial assumption that all documents followed the same layout were incorrect.
+After some research I found the `DOMDocument` functionality in PHP, after which it became considerably more straightforward.
