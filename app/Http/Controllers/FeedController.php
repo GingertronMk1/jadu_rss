@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Feed;
 use App\Http\Requests\FeedRequest;
+use Illuminate\Support\Facades\Auth;
 
 class FeedController extends Controller
 {
@@ -14,7 +15,8 @@ class FeedController extends Controller
      */
     public function index()
     {
-        //
+        $feeds = Auth::user()->feeds;
+        return view('feeds.index', compact('feeds'));
     }
 
     /**
