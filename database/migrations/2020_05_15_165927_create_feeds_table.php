@@ -18,6 +18,7 @@ class CreateFeedsTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('url');
+            $table->string('description')->nullable();
             $table->bigInteger('user_id');
         });
     }
