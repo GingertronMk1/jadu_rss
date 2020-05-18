@@ -9,8 +9,13 @@
     </div>
     @foreach($feeds as $feed)
         <div class="card mb-3">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between">
                 {{ $feed->name }}
+                @if($feed->user_id == Auth::user()->id)
+                <a href="{{ route('feeds.edit', compact('feed')) }}">
+                    Edit
+                </a>
+                @endif
             </div>
             <div class="card-body">
                 @if($feed->description)
