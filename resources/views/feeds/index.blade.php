@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="col-12 mb-3 px-0">
-        <a href="{{ url('/feeds/create') }}"class="btn btn-primary">
+        <a href="{{ route('feeds.create') }}"class="btn btn-primary">
             Add a feed
         </a>
     </div>
@@ -22,7 +22,7 @@
                     {{ $feed->description }}
                     <br>
                 @endif
-                {{ $feed->url }}
+                <a href="{{ route('feeds.show', compact('feed')) }}">{{ $feed->url }}</a>
             </div>
         </div>
     @endforeach
