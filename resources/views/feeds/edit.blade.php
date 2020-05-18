@@ -29,9 +29,9 @@
         </div>
         <div class="form-group">
             <label for="name">Description (optional)</label>
-            <textarea class="form-control" name="description" placeholder="A description of the feed's contents">
-            {{ $feed->description }}
-            </textarea>
+            <textarea class="form-control"
+                      name="description"
+                      placeholder="A description of the feed's contents">{{ $feed->description }}</textarea>
         </div>
         <div class="form-group">
             <input type="submit" value="Update feed" class="btn btn-primary">
