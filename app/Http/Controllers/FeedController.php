@@ -38,7 +38,7 @@ class FeedController extends Controller
      */
     public function store(FeedRequest $request)
     {
-        $feed = Auth::user()->feeds()->create($request->all());
+        $feed = Auth::user()->feeds()->create($request->all());     // Store it as belonging to the logged-in user
         return redirect()->route('feeds.show', compact('feed'));
     }
 
@@ -50,26 +50,23 @@ class FeedController extends Controller
      */
     public function show(Feed $feed)
     {
-        $response = Http::get($feed->url);
+        $response = Http::get($feed->url);              // First, get the feed contents.
+        $posts = [];                                    // Initialise an empty array of posts
+        $i = 0;                                         // and a counter at 0.
 
-        $posts = [];
-        $i = 0;
-
-        $doc = new \DOMDocument();
-        $doc->loadXML($response->body());
-        $items = $doc->getElementsByTagName("item");
-        foreach ($items as $item) {
-            foreach($item->childNodes as $child) {
+        $doc = new \DOMDocument();                      // Create a new DOMDocument
+        $doc->loadXML($response->body());               // Load it up with the data from the RSS Feed
+        $items = $doc->getElementsByTagName("item");    // Find the 'item' tags - these are the ones that correspond to posts
+        foreach ($items as $item) {                     // For each of them, check their child nodes
+            foreach($item->childNodes as $child) {      // If that child is the title or description, add it to the posts array
                 if(in_array($child->nodeName, ['title', 'description'])) {
                     $posts[$i][$child->nodeName] = $child->textContent;
                 }
             }
-            $i++;
+            $i++;                                       // Increment the counter
         }
 
-        $feed_data = $posts;
-
-        return view('feeds.show', compact('feed', 'feed_data'));
+        return view('feeds.show', compact('feed', 'posts'));
     }
 
     /**
@@ -80,7 +77,7 @@ class FeedController extends Controller
      */
     public function edit(Feed $feed)
     {
-        if(Auth::user() == $feed->user) {
+        if(Auth::user() == $feed->user) {                   // A User should not be able to see the form to update a feed that is not theirs
             return view('feeds.edit', compact('feed'));
         } else {
             return redirect()->route('feeds.index');
@@ -96,8 +93,12 @@ class FeedController extends Controller
      */
     public function update(FeedRequest $request, Feed $feed)
     {
-        $feed->update($request->all());
-        return redirect()->route('feeds.edit', compact('feed'));
+        if(Auth::user() == $feed->user) {                   // A User should not be able to update a feed that is not theirs
+            $feed->update($request->all());
+            return redirect()->route('feeds.edit', compact('feed'));
+        } else {
+            return redirect()->route('feeds.index');
+        }
     }
 
     /**
@@ -108,7 +109,7 @@ class FeedController extends Controller
      */
     public function destroy(Feed $feed)
     {
-        if(Auth::user() == $feed->user) {
+        if(Auth::user() == $feed->user) {                   // A User should not be able to delete a feed that is not theirs
             $feed->delete();
         }
         return redirect()->route('feeds.index');
