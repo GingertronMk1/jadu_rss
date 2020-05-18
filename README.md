@@ -16,4 +16,5 @@ There are 2 classes:
 - `Feed`
 
 A `User` can have many `Feed`s, and a `Feed` can belong to a single `User`.
-The `User` can create new `Feed`s.
+The `User` can create new `Feed`s, and edit or delete those `Feed`s that they have created.
+A `User` can also view all `Feed`s.
