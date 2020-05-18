@@ -40,4 +40,15 @@ class User extends Authenticatable
     public function feeds() {
         return $this->hasMany(Feed::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        // After item is deleted
+        static::deleted(function ($user) {
+            $user->feeds()->delete();
+        });
+    }
+
 }
