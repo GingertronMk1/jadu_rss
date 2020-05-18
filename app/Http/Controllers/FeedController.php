@@ -60,7 +60,7 @@ class FeedController extends Controller
         $items = $doc->getElementsByTagName("item");
         foreach ($items as $item) {
             foreach($item->childNodes as $child) {
-                if($child->nodeName == 'title' || $child->nodeName == 'description') {
+                if(in_array($child->nodeName, ['title', 'description'])) {
                     $posts[$i][$child->nodeName] = $child->textContent;
                 }
             }
@@ -107,6 +107,8 @@ class FeedController extends Controller
      */
     public function destroy(Feed $feed)
     {
-        $feed->delete();
+        if(Auth::user() == $feed->user) {
+            $feed->delete();
+        }
     }
 }
