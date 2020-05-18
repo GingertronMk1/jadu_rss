@@ -5,13 +5,13 @@
     <h1 class="col-12 px-0">
         Latest posts for {{ $feed->name }}
     </h1>
-    @foreach($feed_data as $fd_item)
+    @foreach($posts as $post)
         <div class="card mb-3">
             <div class="card-header">
-                {!! $fd_item['title'] !!}
+                {!! $post['title'] !!}
             </div>
             <div class="card-body">
-                {!! $fd_item['description'] !!}
+                {!! $post['description'] !!}
             </div>
         </div>
     @endforeach
