@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Feed;
 use App\Http\Requests\FeedRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class FeedController extends Controller
 {
@@ -49,7 +50,26 @@ class FeedController extends Controller
      */
     public function show(Feed $feed)
     {
-        //
+        $response = Http::get($feed->url);
+
+        $posts = [];
+        $i = 0;
+
+        $doc = new \DOMDocument();
+        $doc->loadXML($response->body());
+        $items = $doc->getElementsByTagName("item");
+        foreach ($items as $item) {
+            foreach($item->childNodes as $child) {
+                if($child->nodeName == 'title' || $child->nodeName == 'description') {
+                    $posts[$i][$child->nodeName] = $child->textContent;
+                }
+            }
+            $i++;
+        }
+
+        $feed_data = $posts;
+
+        return view('feeds.show', compact('feed', 'feed_data'));
     }
 
     /**
@@ -60,7 +80,7 @@ class FeedController extends Controller
      */
     public function edit(Feed $feed)
     {
-        //
+        return view('feeds.edit', compact('feed'));
     }
 
     /**
@@ -72,7 +92,8 @@ class FeedController extends Controller
      */
     public function update(FeedRequest $request, Feed $feed)
     {
-        //
+        $feed->update($request->all());
+        return redirect()->route('feeds.show', compact('feed'));
     }
 
     /**
