@@ -15,7 +15,7 @@ class FeedController extends Controller
      */
     public function index()
     {
-        $feeds = Auth::user()->feeds;
+        $feeds = Feed::all();
         return view('feeds.index', compact('feeds'));
     }
 
@@ -26,7 +26,7 @@ class FeedController extends Controller
      */
     public function create()
     {
-        //
+        return view('feeds.create');
     }
 
     /**
@@ -37,7 +37,8 @@ class FeedController extends Controller
      */
     public function store(FeedRequest $request)
     {
-        //
+        $feed = Auth::user()->feeds()->create($request->all());
+        return redirect()->route('feeds.show', compact('feed'));
     }
 
     /**
