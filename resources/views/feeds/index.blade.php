@@ -17,11 +17,9 @@
                     <a href="{{ route('feeds.edit', compact('feed')) }}" class="btn btn-primary mr-1">
                         Edit
                     </a>
-                    <form method="POST" action="{{ route('feeds.destroy', compact('feed'))}}">
-                        @method("DELETE")
-                        @csrf
-                        <input type="submit" value="Delete" class="btn btn-danger">
-                    </form>
+                    <a href="{{ route('feeds.delete', compact('feed')) }}" class="btn btn-danger">
+                        Delete
+                    </a>
                 </span>
                 @endif
             </div>

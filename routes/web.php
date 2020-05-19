@@ -21,4 +21,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('feeds', 'FeedController')->middleware('auth');
+Route::middleware('auth')->group(function() {
+    Route::resource('feeds', 'FeedController');
+    Route::get('feeds/{feed}/delete', 'FeedController@delete')->name('feeds.delete');
+});

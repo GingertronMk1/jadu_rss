@@ -36,7 +36,7 @@
         <div class="form-group">
             <input type="submit" value="Update feed" class="btn btn-primary">
             <a href="{{ url()->previous() }}" class="btn btn-danger">Cancel</a>
-        <div>
+        </div>
         </div>
     </form>
 </div>

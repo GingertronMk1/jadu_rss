@@ -102,6 +102,21 @@ class FeedController extends Controller
     }
 
     /**
+     * Show the form for deleting the specified resource.
+     *
+     * @param  \App\Models\Feed  $feed
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Feed $feed)
+    {
+        if(Auth::user() == $feed->user) {                   // A User should not be able to delete a feed that is not theirs
+            return view('feeds.delete', compact('feed'));
+        }
+        return redirect()->route('feeds.index');
+
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Feed  $feed
